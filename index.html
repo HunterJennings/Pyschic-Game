@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>psychic game!</title>
+</head>
+
+
+<body>
+    <h1>The Psychic Game</h1>
+    <h2>Choose a letter to begin!</h2>
+    <div>
+        <p id="userChoice-text"></p>
+        <p id="wins-text"></p>
+        <p id="losses-text"></p>
+        <p id="guessesLeft-text"></p>
+        <p id="history-text"></p>
+    </div>
+
+    <script>
+        var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+        var wins = 0;
+        var losses = 0;
+        var guesses = 0;
+        var keyPressHistory = [];
+        var userChoiceText = document.getElementById("userChoice-text");
+        var winsText = document.getElementById("wins-text");
+        var lossesText = document.getElementById("losses-text");
+        var guessesLeftText = document.getElementById("guessesLeft-text");
+        var historyText = document.getElementById("history-text");
+        var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+
+        document.onkeyup = function (event) {
+            var userGuess = event.key;
+            //got some help from my stepdad on the keypresshistory
+            if (keyPressHistory.length > 9) {
+                keyPressHistory.pop();
+            }
+            keyPressHistory.unshift(userGuess);
+
+            if (userGuess === computerGuess) {
+                wins++;
+                guesses = 0;
+                keyPressHistory= [];
+            }
+            else {
+                guesses++;
+            }
+
+            if (guesses >= 10) {
+                losses++;
+                guesses = 0;
+                keyPressHistory= [];
+            }
+
+
+            userChoiceText.textContent = "You chose: " + userGuess;
+            winsText.textContent = "wins: " + wins;
+            lossesText.textContent = "losses: " + losses;
+            guessesLeftText.textContent = "guesses: " + guesses;
+            historyText.textContent = "history: " + keyPressHistory.join(", ");
+        }
+    </script>
+</body>
+
+</html>
